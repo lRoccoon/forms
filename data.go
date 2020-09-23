@@ -7,6 +7,7 @@ package forms
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
@@ -265,6 +266,19 @@ func (d Data) GetFileBytes(key string) ([]byte, error) {
 		}
 		return ioutil.ReadAll(file)
 	}
+}
+
+// GetFileReader returns the body of the file reader associated with key
+func (d Data) GetFileReader(key string) (io.Reader, error) {
+	fileHeader, found := d.Files[key]
+	if !found {
+		return nil, nil
+	}
+	file, err := fileHeader.Open()
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
 }
 
 // GetStringsSplit returns the first element in data[key] split into a slice delimited by delim.

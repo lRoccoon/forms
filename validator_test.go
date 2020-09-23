@@ -134,7 +134,7 @@ func TestMinLength(t *testing.T) {
 	val.MinLength("one", 1)
 	val.MinLength("three", 3)
 	if val.HasErrors() {
-		t.Error("Expected no errors but got errors: %v", val.Messages())
+		t.Errorf("Expected no errors but got errors: %v", val.Messages())
 	}
 
 	val.MinLength("five", 5)

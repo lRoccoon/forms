@@ -370,6 +370,17 @@ func TestParseMultipart(t *testing.T) {
 	if string(gotBytes) != "Hello!" {
 		t.Errorf(`Expected GetFileBytes("file") to return "Hello!" but got %s`, string(gotBytes))
 	}
+	gotReader, err := d.GetFileReader("file")
+	if err != nil {
+		t.Error(err)
+	}
+	gotBytes, err = ioutil.ReadAll(gotReader)
+	if err != nil {
+		t.Error(err)
+	}
+	if string(gotBytes) != "Hello!" {
+		t.Errorf(`Expected GetFileBytes("file") to return "Hello!" but got %s`, string(gotBytes))
+	}
 }
 
 // Used for testing multipart and urlencoded form data, since both tests expect the same data
